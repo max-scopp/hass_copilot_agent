@@ -35,8 +35,9 @@ When querying the HA instance, always use the **actual entity IDs as they exist*
 
 ### Automations
 - **ID**: `<action>_<target>_<condition>` (e.g., `enable_charging_when_home`)
-- **Display name**: `🔄 <Action> - <Trigger>` (e.g., `🔄 Charging - Enable when home`)
-- **Labels**: Always include at least one label (e.g., `⚡ Charging`, `💡 Lighting`, `🔒 Security`)
+- **Display name**: `🔄 <Action> - <Trigger>` — follow [Language Preferences](#language-preferences) for text (e.g., `🔄 Charging - Enable when home`)
+- **Labels**: Always include at least one label (e.g., `Charging`, `Lighting`, `Security`)
+- **Categories**: Always assign a category with an emoji prefix (e.g., `⚡ Energy`, `💡 Lighting`, `🔒 Security`)
 - One automation = one clear purpose. Chain complex logic via scripts.
 
 ### Scripts: `<action>_<target>_<optional_purpose>`
@@ -50,13 +51,34 @@ When querying the HA instance, always use the **actual entity IDs as they exist*
 
 **Every automation, script, and helper MUST have at least one label.** This is non-negotiable — unlabeled items become impossible to filter and maintain at scale.
 
-- Labels are **display text**, not IDs — use natural language and emojis (e.g., `⚡ Charging`, `💡 Lighting`, `🌿 Garden`)
-- There is no fixed label list — derive labels from context and purpose
-- When suggesting a label that likely doesn't exist yet, also suggest a color for it (e.g., `⚡ Charging` → orange)
-- When presenting a new automation/script/helper, always include a recommended label and remind the user to apply it in HA
-- If an item spans multiple concerns, apply multiple labels
+**Labels** use icons, **not** emojis. **Categories** use emojis.
 
-### Areas & Emojis
+**Labels** are HA-wide — they span across all item types. A light entity, its automation, and a related helper can all share the same label. Labels group related items regardless of domain.
+
+**Categories** are scoped to a single item type — they organize items within their own kind (e.g., grouping automations among other automations). Categories use emojis as prefix in their display name.
+
+- Labels are **display text**, not IDs — follow [Language Preferences](#language-preferences) for text (e.g., `Charging`, `Lighting`, `Garden`)
+- Labels have **no emojis** — use HA icons instead (see [Icons vs Emojis](#icons-vs-emojis))
+- There is no fixed label or category list — derive from context and purpose
+- When suggesting a new label, also suggest an icon and a color (e.g., `Charging` → icon: `mdi:lightning-bolt`, color: orange)
+- When suggesting a new category, use an emoji prefix (e.g., `⚡ Energy`, `💡 Lighting`, `🌿 Garden`)
+- When presenting a new automation/script/helper, always include a recommended label and category and remind the user to apply them in HA
+- An item can have **multiple labels** but only **one category**
+
+### Icons vs Emojis
+
+**Icons** and **emojis** are different things in Home Assistant:
+
+| | Emojis | Icons |
+|---|---|---|
+| **Format** | Unicode characters (⚡, 💡, 🌿) | String identifiers (e.g., `mdi:lightbulb`, `mdi:lightning-bolt`) |
+| **Used in** | Display text: friendly names, categories, aliases | HA icon fields: entity icons, label icons, area icons |
+| **Default set** | Standard Unicode | [Material Design Icons (MDI)](https://pictogrammers.com/library/mdi/) — prefix `mdi:` |
+| **Custom sets** | N/A | Custom integrations may add icon sets (e.g., `hass:`, `phu:`, `brandico:`). If the user requests icons from a non-default set, ask for a reference link to look up valid icon names. |
+
+When suggesting icons, default to `mdi:` icons. If unsure of the exact icon name, search for it online or ask the user.
+
+### Areas
 - Areas = actual rooms. Every device must be assigned to an area.
 - **One emoji** at the **start** of friendly names only (examples): ⚡ Energy, 💡 Lights, 🔌 Plugs, 🌿 Garden, 🚨 Alarms, 🛑 Cutoff, 🔄 Automations, 📊 Sensors
 
