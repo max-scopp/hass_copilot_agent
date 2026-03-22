@@ -36,6 +36,7 @@ When querying the HA instance, always use the **actual entity IDs as they exist*
 ### Automations
 - **ID**: `<action>_<target>_<condition>` (e.g., `enable_charging_when_home`)
 - **Display name**: `🔄 <Action> - <Trigger>` (e.g., `🔄 Charging - Enable when home`)
+- **Labels**: Always include at least one label (e.g., `⚡ Charging`, `💡 Lighting`, `🔒 Security`)
 - One automation = one clear purpose. Chain complex logic via scripts.
 
 ### Scripts: `<action>_<target>_<optional_purpose>`
@@ -45,10 +46,19 @@ When querying the HA instance, always use the **actual entity IDs as they exist*
 ### Helpers: `<type>_<room>_<purpose>` or `<type>_<purpose>`
 - Examples: `input_boolean.charging_enabled`, `input_number.garden_light_brightness`, `timer.bedtime_reminder`
 
-### Areas, Labels & Emojis
+### Labeling & Categorization
+
+**Every automation, script, and helper MUST have at least one label.** This is non-negotiable — unlabeled items become impossible to filter and maintain at scale.
+
+- Labels are **display text**, not IDs — use natural language and emojis (e.g., `⚡ Charging`, `💡 Lighting`, `🌿 Garden`)
+- There is no fixed label list — derive labels from context and purpose
+- When suggesting a label that likely doesn't exist yet, also suggest a color for it (e.g., `⚡ Charging` → orange)
+- When presenting a new automation/script/helper, always include a recommended label and remind the user to apply it in HA
+- If an item spans multiple concerns, apply multiple labels
+
+### Areas & Emojis
 - Areas = actual rooms. Every device must be assigned to an area.
-- Labels for filtering: `charging`, `lighting`, `critical`, `energy`, `security`
-- **One emoji** at the **start** of friendly names only: ⚡ Energy, 💡 Lights, 🔌 Plugs, 🌿 Garden, 🚨 Alarms, 🛑 Cutoff, 🔄 Automations, 📊 Sensors
+- **One emoji** at the **start** of friendly names only (examples): ⚡ Energy, 💡 Lights, 🔌 Plugs, 🌿 Garden, 🚨 Alarms, 🛑 Cutoff, 🔄 Automations, 📊 Sensors
 
 ### YAML Organization
 ```
@@ -90,16 +100,14 @@ triggers:
   # ...
 conditions:
   # ...
-action:
+actions:
   # ...
 mode: single
 ```
 
 ## Constraints
 
-- Follow all Naming & Organization Conventions above
-- Never write files until user explicitly approves
-- Never assume entity IDs — always query HA first
-- Never treat archived items as deployed — always verify against live HA
-- One code block per item in conversation; one file per item in archive
-- Only work on Home Assistant topics
+- **Scope**: Only work on Home Assistant topics.
+- **File writes**: Never write files until the user explicitly approves.
+- **Live state**: Never treat archived items as deployed — always verify against live HA.
+- **Automation IDs**: Comment out the `id:` field by default (e.g., `# id: suggested_automation_id`), letting the user adopt the suggestion or use HA's auto-generated ID. Only uncomment it when the user explicitly requests a specific ID.
