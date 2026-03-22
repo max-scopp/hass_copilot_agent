@@ -1,0 +1,42 @@
+token
+
+# Home Assistant Config Agent Archives
+# Local reference copies of automations and configurations
+# These are never deployed to Home Assistant and are for reference/comparison only
+*_archive/
+
+# Home Assistant Secrets & Local Configuration
+secrets.yaml
+secrets.yml
+.env
+.env.local
+
+# Home Assistant Generated Files & Logs
+.HA_VERSION
+home-assistant.log
+home-assistant_v2.db
+home-assistant_v2.db-journal
+*.log
+
+# Caches & Temporary Files
+.cache/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.vscode/
+.DS_Store
+
+# Backups & Local Snapshots
+backups/
+*.backup
+
+# Dependencies
+venv/
+node_modules/
+
+# IDE & Editor Files
+*.swp
+*.swo
+*~
+.idea/
